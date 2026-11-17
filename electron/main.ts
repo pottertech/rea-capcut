@@ -15,7 +15,7 @@ import {
   shell,
 } from "electron";
 import { startPluginHost } from "./pluginHost";
-import { createReadStream } from "node:fs";
+import { createReadStream, constants as fsConstants, accessSync, existsSync } from "node:fs";
 import {
   access,
   copyFile,
@@ -580,7 +580,19 @@ function registerIPC() {
   });
   handle("export-project", async (input: unknown, options: ExportOptions) => {
     const project = validateProject(input);
-    if (!outputPaths.has(options.path)) throw new Error("请先选择导出位置");
+    if (!outputPaths.has(options.path)) {
+      // Direct-path fallback for agent-driven exports: the destination must be
+      // an absolute path with an existing, writable parent directory.
+      if (!path.isAbsolute(options.path)) throw new Error("请先选择导出位置");
+      const parent = path.dirname(options.path);
+      if (!existsSync(parent)) throw new Error("导出目录不存在");
+      try {
+        accessSync(parent, fsConstants.W_OK);
+      } catch {
+        throw new Error("导出目录不可写");
+      }
+      outputPaths.add(options.path);
+    }
     for (const asset of project.assets)
       if (!allowedMedia.has(path.resolve(asset.path)))
         throw new Error("导出引用了未经导入的素材");
@@ -981,6 +993,9 @@ function updateApplicationMenu() {
 }
 
 void app.whenReady().then(async () => {
+  try {
+    app.setAccessibilitySupportEnabled(true);
+  } catch { /* Accessibility support is best-effort for assistive tooling. */ }
   try {
     const settings = JSON.parse(await readFile(userFile("assistant-clis.json"), "utf8"));
     for (const key of ["codex", "claude"] as const)
