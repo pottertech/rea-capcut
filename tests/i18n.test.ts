@@ -4,6 +4,7 @@ import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { zhCN } from "../src/i18n/locales/zh-CN";
 import { en } from "../src/i18n/locales/en";
 import { tr } from "../src/i18n/locales/tr";
+import { th } from "../src/i18n/locales/th";
 import { read, remember, isLanguage, detectLanguage, useLanguageStore, DEFAULT_LANGUAGE, STORAGE_KEY } from "../src/i18n/languageStore";
 
 describe("i18n Dictionaries Parity", () => {
@@ -11,9 +12,11 @@ describe("i18n Dictionaries Parity", () => {
     const zhKeys = Object.keys(zhCN).sort();
     const enKeys = Object.keys(en).sort();
     const trKeys = Object.keys(tr).sort();
+    const thKeys = Object.keys(th).sort();
 
     expect(enKeys).toEqual(zhKeys);
     expect(trKeys).toEqual(zhKeys);
+    expect(thKeys).toEqual(zhKeys);
   });
 
   it("should have matching interpolation placeholders across languages", () => {
@@ -24,6 +27,7 @@ describe("i18n Dictionaries Parity", () => {
       if (zhPlaceholders.length > 0) {
         expect(extractPlaceholders(en[key as keyof typeof en])).toEqual(zhPlaceholders);
         expect(extractPlaceholders(tr[key as keyof typeof tr])).toEqual(zhPlaceholders);
+        expect(extractPlaceholders(th[key as keyof typeof th])).toEqual(zhPlaceholders);
       }
     });
   });
@@ -43,6 +47,7 @@ describe("languageStore Preferences & Fallbacks", () => {
     expect(isLanguage("zh-CN")).toBe(true);
     expect(isLanguage("en")).toBe(true);
     expect(isLanguage("tr")).toBe(true);
+    expect(isLanguage("th")).toBe(true);
     expect(isLanguage("fr")).toBe(false);
     expect(isLanguage(null)).toBe(false);
     expect(isLanguage(123)).toBe(false);
@@ -88,6 +93,7 @@ describe("first launch locale selection", () => {
     expect(detectLanguage(["en-GB"])).toBe("en");
     expect(detectLanguage(["zh-Hans-CN"])).toBe("zh-CN");
     expect(detectLanguage(["tr-TR"])).toBe("tr");
+    expect(detectLanguage(["th-TH"])).toBe("th");
     expect(detectLanguage(["fr-FR"])).toBe("en");
     expect(detectLanguage([])).toBe("en");
   });

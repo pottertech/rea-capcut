@@ -1,8 +1,8 @@
 import { create } from "zustand";
 
-export type Language = "zh-CN" | "en" | "tr";
+export type Language = "zh-CN" | "en" | "tr" | "th";
 
-export const SUPPORTED_LANGUAGES: readonly Language[] = ["zh-CN", "en", "tr"];
+export const SUPPORTED_LANGUAGES: readonly Language[] = ["zh-CN", "en", "tr", "th"];
 export const DEFAULT_LANGUAGE: Language = "en";
 
 // Match the namespaced, versioned pattern used in EditorWorkspace.tsx
@@ -23,6 +23,7 @@ export function detectLanguage(languages: readonly string[] = typeof navigator =
     if (code === "zh") return "zh-CN";
     if (code === "tr") return "tr";
     if (code === "en") return "en";
+    if (code === "th") return "th";
   }
   return DEFAULT_LANGUAGE;
 }

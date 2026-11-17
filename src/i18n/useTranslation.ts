@@ -2,12 +2,14 @@ import { useLanguageStore } from "./languageStore";
 import { zhCN, type TranslationKey } from "./locales/zh-CN";
 import { en } from "./locales/en";
 import { tr } from "./locales/tr";
+import { th } from "./locales/th";
 import type { Language } from "./languageStore";
 
 const dictionaries: Record<Language, Record<TranslationKey, string>> = {
   "zh-CN": zhCN,
   en,
   tr,
+  th,
 };
 
 export function useTranslation() {

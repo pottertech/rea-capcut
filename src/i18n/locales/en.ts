@@ -78,6 +78,7 @@ export const en: Record<TranslationKey, string> = {
   "settings.language.zh-CN": "简体中文",
   "settings.language.en": "English",
   "settings.language.tr": "Türkçe",
+  "settings.language.th": "ไทย",
   "settings.engine": "Local rendering engine",
   "settings.engine.ready": "FFmpeg is ready",
   "settings.engine.missing": "FFmpeg / FFprobe not found",

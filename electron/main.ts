@@ -242,7 +242,7 @@ async function readProject(file: string) {
 }
 // Renderer preference is validated and synchronised before user interaction.
 // Native dialogs do not receive arbitrary translated strings over IPC.
-let uiLanguage: "zh-CN" | "en" | "tr" = "en";
+let uiLanguage: "zh-CN" | "en" | "tr" | "th" = "en";
 const nativeUI = (chinese: string, english: string) => uiLanguage === "zh-CN" ? chinese : english;
 
 function handle(name: string, callback: (...args: any[]) => unknown) {
@@ -296,7 +296,7 @@ function registerIPC() {
     return updates.open(target);
   });
   handle("set-ui-language", (language: unknown) => {
-    if (language !== "zh-CN" && language !== "en" && language !== "tr") throw new Error("Invalid UI language");
+    if (language !== "zh-CN" && language !== "en" && language !== "tr" && language !== "th") throw new Error("Invalid UI language");
     uiLanguage = language;
     updateApplicationMenu();
   });
@@ -1014,7 +1014,11 @@ void app.whenReady().then(async () => {
   await cleanSpeechTemporaries(userFile("speech-media"));
   protocol.handle("reacut-media", serveMedia);
   registerIPC();
-  uiLanguage = app.getLocale().toLowerCase().startsWith("zh") ? "zh-CN" : "en";
+  const detectedLocale = app.getLocale().toLowerCase();
+  uiLanguage = detectedLocale.startsWith("zh") ? "zh-CN"
+    : detectedLocale.startsWith("th") ? "th"
+    : detectedLocale.startsWith("tr") ? "tr"
+    : "en";
   updateApplicationMenu();
   createWindow();
   app.on("activate", () => {

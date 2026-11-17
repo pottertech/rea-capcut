@@ -76,6 +76,7 @@ const dictionary = {
   "settings.language.zh-CN": "简体中文",
   "settings.language.en": "English",
   "settings.language.tr": "Türkçe",
+  "settings.language.th": "ไทย",
   "settings.engine": "本地渲染引擎",
   "settings.engine.ready": "FFmpeg 已就绪",
   "settings.engine.missing": "未找到 FFmpeg / FFprobe",

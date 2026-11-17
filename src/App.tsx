@@ -1500,6 +1500,7 @@ export default function App() {
                 <option value="zh-CN">{t("settings.language.zh-CN")}</option>
                 <option value="en">{t("settings.language.en")}</option>
                 <option value="tr">{t("settings.language.tr")}</option>
+                <option value="th">{t("settings.language.th")}</option>
               </select>
             <div className={`engine-status ${system.ffmpeg ? "ready" : ""}`}>
               {system.ffmpeg ? <CheckCircle2 size={18} /> : <Info size={18} />}
