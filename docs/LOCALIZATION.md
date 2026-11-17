@@ -5,7 +5,7 @@ Chinese), or press **Cmd/Ctrl+,**. The **Language / 语言** selector applies
 immediately and the choice is saved locally for the next launch.
 
 On a fresh profile ReaCut uses the first supported OS/browser language (Chinese,
-English or Turkish), falling back to English. An existing explicit preference
+English, Turkish or Thai), falling back to English. An existing explicit preference
 always wins. If local preference storage is unavailable, switching still works
 for the current session.
 
@@ -17,6 +17,13 @@ and settings dialogs, application menus and application-owned picker labels.
 Known application errors and progress messages are localized at the display
 boundary. Unknown backend diagnostic details are preserved rather than hidden.
 OS-provided picker controls and service submenus follow the operating system.
+
+Thai (added by pottertech fork, 2026-11-17) follows the Turkish coverage class:
+the localized dictionary surfaces — toolbar, menus, status bar, settings/recent
+projects dialog, keyboard shortcuts dialog and the speech workflow — are fully
+translated and verified (no tofu: Thai renders through the OS font fallback).
+Editor-panel co-located strings (media library tabs, player, timeline labels)
+remain English for Thai, exactly as they do for Turkish.
 
 Existing project/track names, filenames, captions, user text, imported templates
 and assistant conversations are **not translated or rewritten** when switching
